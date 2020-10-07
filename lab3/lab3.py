@@ -104,25 +104,24 @@ def normalize_counts(counts):
     returns a corresponding dictionary of probabilities by normalizing
     the counts to sum to 1.
     '''
-    ## students need to fill in correct function
-    return counts
+    sum = np.sum([y for x, y in str_counts.items()])
+    normalized = {x: y / sum for x, y in str_counts.items()}
+    return normalized if isclose(np.sum([y for x, y in normalized.items()]), 1.0) else counts
 
 def compute_likelihood(data, model):
     '''compute_likelihood takes a model (ie distribution, represented
     as a dictionary of outcome-probability pairs) and a list of
     outcomes (the data) and computes the likelihood P(data | model)
     '''
-    ## students need to fill in correct function
-    return 0
-        
+    return np.prod([model[char] for char in data])
+
 def compute_log_likelihood(data, model):        
     '''compute_likelihood takes a model (ie distribution, represented
     as a dictionary of outcome-probability pairs) and a list of
     outcomes (the data) and computes the log (base 10) of the
     likelihood
     '''
-    ## students need to fill in correct function
-    return 0
+    return -np.sum([np.log10(model[char]) for char in data])
 
 ## Main body of code ##
 
@@ -146,7 +145,7 @@ if not (isclose(sum(list(distribution.values())), 1.0)):
     sys.exit(1)
 
 #Generate a sequence of 50 samples from the distribution.
-str_list = generate_random_sequence(distribution, 50)
+str_list = generate_random_sequence(distribution, 1000)
 #str_list = generate_random_sequence(distribution, 500) #or do 500
 print(str_list)
 
